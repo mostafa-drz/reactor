@@ -123,3 +123,14 @@ body {
   background-color: bisque;
   height: 100%;
 }
+
+.github-logo {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+.github-logo img {
+  width: 50px;
+  height: 50px;
+}

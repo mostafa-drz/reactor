@@ -4,6 +4,7 @@ import Left from "./Left";
 import Right from "./Right";
 import Score from "./Score";
 import Timer from "./Timer";
+import githubIcon from "./github.png";
 
 function App() {
   const [challenge, setChallenge] = useState<string[]>([]);
@@ -105,6 +106,15 @@ function App() {
           userInput={userInput}
           started={started}
         />
+      </div>
+      <div className="github-logo">
+        <a
+          href="https://github.com/mostafa-drz/among-us-reactor"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <img src={githubIcon} alt="github-icon" />
+        </a>
       </div>
     </div>
   );
