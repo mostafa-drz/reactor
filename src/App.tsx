@@ -98,7 +98,7 @@ function App() {
         <span className="gameover">Game Over, your score: {score}</span>
       )}
       <Score score={score} />
-      <div className="board">
+      <div className="platform">
         <Left secquence={challenge} gameOver={gameOver} started={started} />
         <Right
           onClick={handleClick}

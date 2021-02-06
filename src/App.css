@@ -37,9 +37,10 @@ body {
   padding-top: 3rem;
   font-family: "Press Start 2P", cursive;
 }
-.board {
+.platform {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 .container {
   background-color: #fafafa;
@@ -47,7 +48,7 @@ body {
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
   width: 400px;
-  margin: auto;
+  margin: 3px;
   border: 5px solid var(--black);
 }
 
