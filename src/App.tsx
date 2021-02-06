@@ -13,13 +13,6 @@ function App() {
   const [started, setStarted] = useState<boolean>(false);
   const [time, setTime] = useState<number>(0);
   const timer = useRef<any>();
-  function generateNext() {
-    let next: number;
-    do {
-      next = Math.round(Math.random() * 8);
-    } while (next === +challenge[challenge.length - 1]);
-    setChallenge((challenge) => challenge.concat(next + ""));
-  }
 
   function handleClick(id: string): void {
     setUserInput((userInput) => userInput.concat(id));
@@ -34,6 +27,16 @@ function App() {
     setStarted(true);
   }
   useEffect(() => {
+    if (!started) {
+      return;
+    }
+    function generateNext() {
+      let next: number;
+      do {
+        next = Math.round(Math.random() * 8);
+      } while (next === +challenge[challenge.length - 1]);
+      setChallenge((challenge) => challenge.concat(next + ""));
+    }
     for (let i = 0; i < userInput.length; i++) {
       if (userInput[i] !== challenge[i]) {
         setGameOver(true);

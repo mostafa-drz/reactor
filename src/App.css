@@ -2,8 +2,20 @@
   --gray: #737373;
   --black: #000;
 }
+
 body {
-  background-color: yellow;
+  background: #283048; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #859398,
+    #283048
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #859398,
+    #283048
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
   width: 100vw;
   height: 100vh;
 }
@@ -80,8 +92,11 @@ body {
   background-color: green;
 }
 
-.scor-container {
+.score-container {
   display: flex;
+  justify-content: center;
+  height: 2rem;
+  margin-bottom: 3%;
 }
 
 .gameover {
