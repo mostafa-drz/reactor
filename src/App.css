@@ -60,6 +60,9 @@
   cursor: pointer;
   border: 3px solid transparent;
   transition: all 0.1s ease-in;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .button:hover {
@@ -86,4 +89,10 @@
 
 .scor-container {
   display: flex;
+}
+
+.gameover {
+  font-weight: 800;
+  font-family: "Press Start 2P", cursive;
+  color: red;
 }
