@@ -23,6 +23,7 @@ body {
 .App {
   text-align: center;
   padding-top: 3rem;
+  font-family: "Press Start 2P", cursive;
 }
 .board {
   display: flex;
@@ -85,7 +86,6 @@ body {
 
 .gameover {
   font-weight: 800;
-  font-family: "Press Start 2P", cursive;
   color: red;
 }
 
