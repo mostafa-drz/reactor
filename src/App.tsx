@@ -14,7 +14,10 @@ function App() {
   const [time, setTime] = useState<number>(0);
   const timer = useRef<any>();
   function generateNext() {
-    const next = Math.round(Math.random() * 8);
+    let next: number;
+    do {
+      next = Math.round(Math.random() * 8);
+    } while (next === +challenge[challenge.length - 1]);
     setChallenge((challenge) => challenge.concat(next + ""));
   }
 
