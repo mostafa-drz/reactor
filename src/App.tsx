@@ -8,6 +8,7 @@ function App() {
   const [userInput, setUserInput] = useState<string[]>([]);
   const [score, setScore] = useState<number>(0);
   const [gameOver, setGameOver] = useState<boolean>(false);
+  const [started, setStarted] = useState<boolean>(false);
 
   function generateNext() {
     const next = Math.round(Math.random() * 8);
@@ -15,13 +16,20 @@ function App() {
   }
 
   function handleClick(id: string): void {
-    setUserInput((setUserInput) => userInput.concat(id));
+    setUserInput((userInput) => userInput.concat(id));
   }
-
+  function handleStart() {
+    setChallenge([]);
+    setUserInput([]);
+    setScore(0);
+    setGameOver(false);
+    setStarted(true);
+  }
   useEffect(() => {
     for (let i = 0; i < userInput.length; i++) {
       if (userInput[i] !== challenge[i]) {
         setGameOver(true);
+        setStarted(false);
       }
     }
     if (userInput.join(",") === challenge.join(",")) {
@@ -29,23 +37,35 @@ function App() {
       if (challenge.length !== 0) {
         setScore((score) => score + 1);
       }
-      generateNext();
+      if (started) {
+        generateNext();
+      }
     }
-  }, [userInput, challenge]);
+  }, [userInput, challenge, started]);
 
   return (
     <div className="App">
       <h1>Among us Reactor!</h1>
+      <div>
+        <button
+          disabled={started}
+          onClick={handleStart}
+          className={`btn-start ${started ? "disabled" : ""}`}
+        >
+          Start
+        </button>
+      </div>
       {gameOver && (
         <span className="gameover">Game Over, your score: {score}</span>
       )}
       <Score score={score} />
       <div className="board">
-        <Left secquence={challenge} gameOver={gameOver} />
+        <Left secquence={challenge} gameOver={gameOver} started={started} />
         <Reactor
           onClick={handleClick}
           gameOver={gameOver}
           userInput={userInput}
+          started={started}
         />
       </div>
     </div>
@@ -67,13 +87,14 @@ function Reactor(props: {
   onClick: (id: string) => void;
   gameOver: boolean;
   userInput: string[];
+  started: boolean;
 }) {
-  const { gameOver, userInput } = props;
+  const { gameOver, userInput, started } = props;
   function renderButtons() {
     const buttons = [];
     for (let i = 0; i < 9; i++) {
       buttons.push(
-        <div key={`cell-${i}`}>
+        <div key={`cell-${i}`} className={!started ? "disabled" : undefined}>
           {gameOver ? (
             <div
               className="button"
@@ -113,8 +134,12 @@ function initCells(): { [id: string]: Cell } {
   }
   return cells;
 }
-function Left(props: { secquence: string[]; gameOver: boolean }) {
-  const { secquence, gameOver } = props;
+function Left(props: {
+  secquence: string[];
+  gameOver: boolean;
+  started: boolean;
+}) {
+  const { secquence, gameOver, started } = props;
   const [cells, setCells] = useState<{ [id: string]: Cell }>(() => initCells());
   useEffect(() => {
     for (let i = 0; i < secquence.length; i++) {
@@ -142,7 +167,10 @@ function Left(props: { secquence: string[]; gameOver: boolean }) {
     const buttons = [];
     for (let i = 0; i < 9; i++) {
       buttons.push(
-        <div key={`chhalenge-cell-${i}`}>
+        <div
+          key={`chhalenge-cell-${i}`}
+          className={!started ? "disabled" : undefined}
+        >
           {gameOver ? (
             <div
               className="button left"
