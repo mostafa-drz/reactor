@@ -1,10 +1,11 @@
-import { Timer } from "aws-sdk/clients/ioteventsdata";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
   const [challenge, setChallenge] = useState<string[]>([]);
   const [userInput, setUserInput] = useState<string[]>([]);
+  const [score, setScore] = useState<number>(0);
+
   function generateNext() {
     const next = Math.round(Math.random() * 8);
     setChallenge((challenge) => challenge.concat(next + ""));
@@ -22,16 +23,17 @@ function App() {
     }
     if (userInput.join(",") === challenge.join(",")) {
       setUserInput([]);
+      if (challenge.length !== 0) {
+        setScore((score) => score + 1);
+      }
       generateNext();
     }
-  }, [userInput]);
+  }, [userInput, challenge]);
 
-  useEffect(() => {
-    generateNext();
-  }, []);
   return (
     <div className="App">
       <h1>Among us Reactor!</h1>
+      <Score score={score} />
       <div className="board">
         <Left secquence={challenge} />
         <Reactor onClick={handleClick} />
@@ -40,6 +42,17 @@ function App() {
   );
 }
 
+function Score(props: { score: number }) {
+  const { score } = props;
+  function renderScore() {
+    let s = [];
+    for (let i = 0; i < score; i++) {
+      s.push(<span key={`score-${i}`} className="score"></span>);
+    }
+    return s;
+  }
+  return <div className="score-container">{renderScore()}</div>;
+}
 function Reactor(props: { onClick: (id: string) => void }) {
   function renderButtons() {
     const buttons = [];
