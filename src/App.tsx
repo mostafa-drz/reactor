@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 
+const GRAY = "var(--gray)";
+const BLACK = "var(--black)";
 function App() {
   const [challenge, setChallenge] = useState<string[]>([]);
   const [userInput, setUserInput] = useState<string[]>([]);
@@ -81,7 +83,7 @@ function Reactor(props: {
                     ? i + "" === userInput[userInput.length - 1]
                       ? "red"
                       : "green"
-                    : "#ccc",
+                    : GRAY,
               }}
             >
               {userInput.indexOf(i + "") !== -1
@@ -107,7 +109,7 @@ interface Cell {
 function initCells(): { [id: string]: Cell } {
   const cells: { [id: string]: Cell } = {};
   for (let i = 0; i < 9; i++) {
-    cells[i.toString()] = { id: i, backgroundColor: "#ccc" };
+    cells[i.toString()] = { id: i, backgroundColor: BLACK };
   }
   return cells;
 }
@@ -131,7 +133,7 @@ function Left(props: { secquence: string[]; gameOver: boolean }) {
     setTimeout(() => {
       setCells((cells) => ({
         ...cells,
-        [s]: { ...cells[s], backgroundColor: "#ccc" },
+        [s]: { ...cells[s], backgroundColor: BLACK },
       }));
     }, 500 * (index + 2));
   }
@@ -143,10 +145,10 @@ function Left(props: { secquence: string[]; gameOver: boolean }) {
         <div key={`chhalenge-cell-${i}`}>
           {gameOver ? (
             <div
-              className="button"
+              className="button left"
               style={{
                 backgroundColor:
-                  secquence.indexOf(i + "") !== -1 ? "green" : "#ccc",
+                  secquence.indexOf(i + "") !== -1 ? "green" : GRAY,
               }}
             >
               {secquence.indexOf(i + "") !== -1
@@ -155,7 +157,7 @@ function Left(props: { secquence: string[]; gameOver: boolean }) {
             </div>
           ) : (
             <div
-              className="button"
+              className="button left"
               style={{ backgroundColor: cells[i + ""].backgroundColor }}
             />
           )}
@@ -164,7 +166,7 @@ function Left(props: { secquence: string[]; gameOver: boolean }) {
     }
     return buttons;
   }
-  return <div className="container">{renderButtons()}</div>;
+  return <div className="container left">{renderButtons()}</div>;
 }
 
 function getAllIndices(input: string[], search: string) {

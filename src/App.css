@@ -1,44 +1,14 @@
+:root {
+  --gray: #737373;
+  --black: #000;
+}
+body {
+  background-color: yellow;
+  width: 100vw;
+  height: 100vh;
+}
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.App {
-  display: grid;
 }
 .board {
   display: flex;
@@ -51,23 +21,31 @@
   grid-template-rows: 1fr 1fr 1fr;
   width: 400px;
   margin: auto;
+  border: 5px solid var(--black);
+}
+
+.container.left {
+  background-color: var(--black);
+  border: 5px solid white;
 }
 .button {
-  background-color: #ccc;
+  background-color: var(--gray);
   width: 100px;
   height: 100px;
   margin: 10px;
   cursor: pointer;
-  border: 3px solid transparent;
+  border: 3px solid var(--black);
   transition: all 0.1s ease-in;
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 3px;
 }
-
+.button.left {
+  background-color: var(--black);
+}
 .button:hover {
-  border: 3px solid #000;
-  border-radius: 5px;
+  opacity: 0.5;
   transition: all 0.1s ease-in;
 }
 .button:active {
