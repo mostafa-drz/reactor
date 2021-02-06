@@ -1,32 +1,58 @@
-import React, { useEffect, useState } from "react";
+import { Timer } from "aws-sdk/clients/ioteventsdata";
+import React, { useEffect, useRef, useState } from "react";
 import "./App.css";
 
 function App() {
+  const [challenge, setChallenge] = useState<string[]>([]);
+  const [userInput, setUserInput] = useState<string[]>([]);
+  function generateNext() {
+    const next = Math.round(Math.random() * 8);
+    setChallenge((challenge) => challenge.concat(next + ""));
+  }
+
+  function handleClick(id: string): void {
+    setUserInput((setUserInput) => userInput.concat(id));
+  }
+
+  useEffect(() => {
+    for (let i = 0; i < userInput.length; i++) {
+      if (userInput[i] !== challenge[i]) {
+        console.log("Game Over", userInput, challenge);
+      }
+    }
+    if (userInput.join(",") === challenge.join(",")) {
+      setUserInput([]);
+      generateNext();
+    }
+  }, [userInput]);
+
+  useEffect(() => {
+    generateNext();
+  }, []);
   return (
     <div className="App">
       <h1>Among us Reactor!</h1>
       <div className="board">
-        <Left secquence={["0", "2", "4", "0"]} />
-        <Reactor />
+        <Left secquence={challenge} />
+        <Reactor onClick={handleClick} />
       </div>
     </div>
   );
 }
 
-function Reactor(props: {}) {
-  return (
-    <div className="container">
-      <div className="button" />
-      <div className="button" />
-      <div className="button" />
-      <div className="button" />
-      <div className="button" />
-      <div className="button" />
-      <div className="button" />
-      <div className="button" />
-      <div className="button" />
-    </div>
-  );
+function Reactor(props: { onClick: (id: string) => void }) {
+  function renderButtons() {
+    const buttons = [];
+    for (let i = 0; i < 9; i++) {
+      buttons.push(
+        <div key={`cell-${i}`}>
+          <div className="button" onClick={() => props.onClick(i + "")} />
+        </div>
+      );
+    }
+    return buttons;
+  }
+  return <div className="container">{renderButtons()}</div>;
 }
 
 interface Cell {
@@ -70,7 +96,7 @@ function Left(props: { secquence: string[] }) {
     const buttons = [];
     for (let i = 0; i < 9; i++) {
       buttons.push(
-        <div>
+        <div key={`chhalenge-cell-${i}`}>
           <div
             className="button"
             style={{ backgroundColor: cells[i + ""].backgroundColor }}
