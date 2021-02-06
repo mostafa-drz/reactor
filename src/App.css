@@ -16,8 +16,8 @@ body {
     #283048
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
-  width: 100vw;
-  height: 100vh;
+  min-width: 100vw;
+  min-height: 100vh;
 }
 .disabled {
   pointer-events: none;
@@ -36,6 +36,9 @@ body {
   text-align: center;
   padding-top: 3rem;
   font-family: "Press Start 2P", cursive;
+  flex: 1;
+  position: relative;
+  padding-bottom: 5rem;
 }
 .platform {
   display: flex;
