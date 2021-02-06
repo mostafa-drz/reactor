@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./App.css";
 import Left from "./Left";
 import Right from "./Right";
 import Score from "./Score";
+import Timer from "./Timer";
 
 function App() {
   const [challenge, setChallenge] = useState<string[]>([]);
@@ -10,7 +11,8 @@ function App() {
   const [score, setScore] = useState<number>(0);
   const [gameOver, setGameOver] = useState<boolean>(false);
   const [started, setStarted] = useState<boolean>(false);
-
+  const [time, setTime] = useState<number>(0);
+  const timer = useRef<any>();
   function generateNext() {
     const next = Math.round(Math.random() * 8);
     setChallenge((challenge) => challenge.concat(next + ""));
@@ -23,6 +25,8 @@ function App() {
     setChallenge([]);
     setUserInput([]);
     setScore(0);
+    setTime(0);
+    clearInterval(timer.current);
     setGameOver(false);
     setStarted(true);
   }
@@ -30,7 +34,6 @@ function App() {
     for (let i = 0; i < userInput.length; i++) {
       if (userInput[i] !== challenge[i]) {
         setGameOver(true);
-        setStarted(false);
       }
     }
     if (userInput.join(",") === challenge.join(",")) {
@@ -44,8 +47,36 @@ function App() {
     }
   }, [userInput, challenge, started]);
 
+  useEffect(() => {
+    if (started) {
+      timer.current = setInterval(() => {
+        setTime((time) => time - 0.1);
+      }, 300);
+    } else if (!started) {
+      clearInterval(timer.current);
+    }
+    return () => {
+      clearInterval(timer.current);
+    };
+  }, [started, challenge]);
+
+  useEffect(() => {
+    setTime(challenge.length);
+  }, [challenge]);
+  useEffect(() => {
+    if (time < 0 && started) {
+      setGameOver(true);
+      clearInterval(timer.current);
+    }
+  }, [time, started]);
+  useEffect(() => {
+    if (gameOver) {
+      setStarted(false);
+    }
+  }, [gameOver]);
   return (
     <div className="App">
+      <Timer elapsedPercent={(time / challenge.length) * 100} />
       <h1>Among us Reactor!</h1>
       <div>
         <button
