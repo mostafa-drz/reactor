@@ -1,6 +1,5 @@
 {
   "name": "among-us-reactor",
-  "homepage": "https://mostafa-drz.github.io/among-us-reactor",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
