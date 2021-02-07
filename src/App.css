@@ -114,17 +114,15 @@ body {
   top: 0;
   left: 0;
   width: 100vw;
-  height: 3rem;
+  height: 0.1rem;
   background-color: #fafafa;
   padding: 3px;
-  border: 1px solid #000;
 }
 
 .elapsed-time {
   position: absolute;
   top: 0;
   left: 0;
-  background-color: bisque;
   height: 100%;
 }
 

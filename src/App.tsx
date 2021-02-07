@@ -57,8 +57,8 @@ function App() {
   useEffect(() => {
     if (started) {
       timer.current = setInterval(() => {
-        setTime((time) => time - 0.1);
-      }, 300);
+        setTime((time) => time - 0.01);
+      }, 50);
     } else if (!started) {
       clearInterval(timer.current);
     }
