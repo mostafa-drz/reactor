@@ -1,5 +1,5 @@
 # Among Us Reactor
-__Demo__: https://mostafa-drz.github.io/among-us-reactor/
+__Demo__: https://mostafa-drz.github.io/reactor/
 
 A game inspired by Among Us Reactor implemented in react
 
